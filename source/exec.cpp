@@ -48,18 +48,18 @@ void doqs(std::vector<T>* & a, bool print = true) {
 /*Now follows the implemantation of counting sort*/
 std::vector<int> countingsort(std::vector<int>* & a, int k) {
 
-  std::vector<int>* b = new std::vector<int>(a->size()+1);
+  std::vector<int>* b = new std::vector<int>(a->size());
   std::vector<int>* c = new std::vector<int>(k+1);
 
-  for (int j = 0; j < a->size(); ++j ) {
+  for (int j = 1; j < a->size()-1; ++j ) {
     c->at(a->at(j))++;
-
   }
+
   for (int i = 2; i <= k; ++i) {
     c->at(i) += c->at(i-1);
-
   }
-  for (int j = a->size(); j > 1; --j) {
+  
+  for (int j = a->size()-1; j > 0; --j) {
     b->at(c->at(a->at(j))) = a->at(j);
 
     for (int i = 0; i < b->size(); ++i) {
@@ -74,7 +74,7 @@ std::vector<int> countingsort(std::vector<int>* & a, int k) {
     }
     std::cout << "\n";
 
-  } 
+  }
   return* b;
 }
 void docs(std::vector<int>* & a, bool print = true) {
