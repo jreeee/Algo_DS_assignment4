@@ -65,18 +65,19 @@ std::vector<int> countingsort(std::vector<int>* & a, int k) {
     --c->at(a->at(i));
   }
 
-  delete a;
+  delete a, c;
   a = b;
   return* a;
 
 }
+/* and a little method that tests if all values are positive and can also print the sorted array */
 void docs(std::vector<int>* & a, bool print = true) {
 
   int k = a->at(0);
 
   for (int i = 0; i < a->size(); ++i) {
     if (a->at(i) < 0) {
-      std::cout << "Your array does not the requirements for counting sort (only positive integers allowed) \n";
+      std::cout << "Your array does not the requirements for counting sort (only positive integers and 0 allowed) \n";
       return;
     }
     if (a->at(i) > k) {
@@ -93,8 +94,40 @@ void docs(std::vector<int>* & a, bool print = true) {
   }
 }
 
+/* little array input and sort - selection*/
+void build() {
+  std::cout << "please enter the size of your array\n";
+  int length;
+  std::cin >> length;
+   if (length <= 0) {
+     std::cout << "invalid length\n";
+     return;
+   }
+  std::vector<int>* a = new std::vector<int>(length);
+  std::cout << "please enter now its content\n";
+  int element;
+  for (int i = 0; i < a->size(); ++i) {
+    std::cin >> element;
+    a->at(i) = element;
+  }
+
+  std::cout << "your array looks like this:\n";
+  for (int i = 0; i < a->size(); ++i) {
+  std::cout << a->at(i) << " | ";
+  }
+  std::cout << "\n\n";
+
+  std::cout << "do you want to use quicksort[q] or counting sort[c]?\n";
+  char sort;
+  std::cin >> sort;
+  if (sort == 'c') docs(a);
+  if (sort == 'q') doqs(a);
+  if ((sort != 'c') && (sort != 'q')) std::cout << sort <<"is not a valid char\n";
+}
+
 int main(int argc, char* argv[])
  {
+  //a couple of examples
   std::vector<int>* t1 = new std::vector<int>{3, 7, 8, 5, 2, 1, 9, 5, 4};
   std::vector<char>* t2 = new std::vector<char>{'c', 'f', 'g', 'd', 'b', 'a', 'h', 'c', 'h'};
   std::vector<int>* t3 = new std::vector<int>{-3, 7, 8, -5, -2, 1, 9, 5, -4};
@@ -109,5 +142,13 @@ int main(int argc, char* argv[])
   docs(t4);
   docs(t5);
 
+  //interactive input method
+  char loop = 'y';
+
+  while (loop != 'x') {
+    build();
+    std::cout << "\ntry another array[any key except x] or exit [x]?\n";
+    std::cin >> loop; 
+  }
   return 0;
  }
