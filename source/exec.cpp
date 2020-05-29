@@ -1,6 +1,15 @@
  #include <vector>
  #include <iostream>
 
+/* small function to print out the elements of an array*/
+template<typename T>
+void printarr(std::vector<T>* & a) {
+  for (int i = 0; i < a->size(); ++i) {
+  std::cout << a->at(i) << " | ";
+  }
+  std::cout << "\n\n";
+}
+
 /*Implementation of quicksort, starting with the partition function, then the quicksort function and finishing off with the doqs (do quicksort) function*/
 template<typename T> 
 int partition(std::vector<T>* & a, int p, int r) {
@@ -38,10 +47,7 @@ void doqs(std::vector<T>* & a, bool print = true) {
   quicksort(a, 0, a->size()-1);
 
   if (print) {
-    for (int i = 0; i < a->size(); ++i) {
-  std::cout << a->at(i) << " | ";
-  }
-  std::cout << "\n";
+  printarr(a);
   }
 }
 
@@ -77,7 +83,7 @@ void docs(std::vector<int>* & a, bool print = true) {
 
   for (int i = 0; i < a->size(); ++i) {
     if (a->at(i) < 0) {
-      std::cout << "Your array does not the requirements for counting sort (only positive integers and 0 allowed) \n";
+      std::cout << "Your array does not the requirements for counting sort (only positive integers and 0 allowed) \n\n";
       return;
     }
     if (a->at(i) > k) {
@@ -87,14 +93,11 @@ void docs(std::vector<int>* & a, bool print = true) {
   countingsort(a, k);
 
   if (print) {
-  for (int i = 0; i < a->size(); ++i) {
-  std::cout << a->at(i) << " | ";
-  }
-  std::cout << "\n";
+    printarr(a);
   }
 }
 
-/* little array input and sort - selection*/
+/* little array input and sort - selection, sadly you can only create int-arrays*/
 void build() {
   std::cout << "please enter the size of your array\n";
   int length;
@@ -112,12 +115,10 @@ void build() {
   }
 
   std::cout << "your array looks like this:\n";
-  for (int i = 0; i < a->size(); ++i) {
-  std::cout << a->at(i) << " | ";
-  }
-  std::cout << "\n\n";
 
-  std::cout << "do you want to use quicksort[q] or counting sort[c]?\n";
+  printarr(a);
+
+  std::cout << "\ndo you want to use quicksort[q] or counting sort[c]?\n";
   char sort;
   std::cin >> sort;
   if (sort == 'c') docs(a);
@@ -131,20 +132,40 @@ int main(int argc, char* argv[])
   std::vector<int>* t1 = new std::vector<int>{3, 7, 8, 5, 2, 1, 9, 5, 4};
   std::vector<char>* t2 = new std::vector<char>{'c', 'f', 'g', 'd', 'b', 'a', 'h', 'c', 'h'};
   std::vector<int>* t3 = new std::vector<int>{-3, 7, 8, -5, -2, 1, 9, 5, -4};
-  std::vector<int>* t4 = new std::vector<int>{6, 1, 2, 4, 1, 3, 4, 6, 1, 3, 2};
-  std::vector<int>* t5 = new std::vector<int>{8, 1, 0, 4, 7, 3, 0, 6, 1, 7, 2};
+  std::vector<double>* t4 = new std::vector<double>{-2.1, 2.3, 4.78, 4.77, -5.03, 1.341, 3.1415, 0.002, -1.22};
+  std::vector<int>* t5 = new std::vector<int>{6, 1, 2, 4, 1, 3, 4, 6, 1, 3, 2};
+  std::vector<int>* t6 = new std::vector<int>{8, 1, 0, 4, 7, 3, 0, 6, 1, 7, 2};
+  std::vector<int>* t7 = new std::vector<int>{8, 1, 0, 4, -7, 3, 0, 6, 1, 7, 2};
 
+  std::cout << "sorting a couple of arrays using quick sort\n\n";
+  std::cout << "array 1:\n";
+  printarr(t1);
   doqs(t1);
+  std::cout << "array 2:\n";
+  printarr(t2);
   doqs(t2);
+  std::cout << "array 3:\n";
+  printarr(t3);
   doqs(t3, false);
-  doqs(t3);
+  printarr(t3);
+  std::cout << "array 4:\n";  
+  printarr(t4);
+  doqs(t4);
 
-  docs(t4);
+  std::cout << "sorting a couple of int arrays using counting sort\n\n";
+  std::cout << "array 5:\n";
+  printarr(t5);
   docs(t5);
+  std::cout << "array 6:\n";
+  printarr(t6);
+  docs(t6);
+  std::cout << "array 7:\n";
+  printarr(t7);
+  docs(t7);
 
   //interactive input method
   char loop = 'y';
-
+  std::cout << "now you can enter some arrays to test the algorithms\n";
   while (loop != 'x') {
     build();
     std::cout << "\ntry another array[any key except x] or exit [x]?\n";
