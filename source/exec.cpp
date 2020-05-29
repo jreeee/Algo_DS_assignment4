@@ -48,41 +48,34 @@ void doqs(std::vector<T>* & a, bool print = true) {
 /*Now follows the implemantation of counting sort*/
 std::vector<int> countingsort(std::vector<int>* & a, int k) {
 
-  std::vector<int>* b = new std::vector<int>(a->size());
   std::vector<int>* c = new std::vector<int>(k+1);
+  std::vector<int>* b = new std::vector<int>(a->size());
+  int i;
 
-  for (int j = 1; j < a->size()-1; ++j ) {
-    c->at(a->at(j))++;
+  for (i = 0;  i < a->size(); ++i ) {
+    ++c->at(a->at(i));
   }
 
-  for (int i = 2; i <= k; ++i) {
+  for (i = 1; i <= k; ++i) {
     c->at(i) += c->at(i-1);
   }
   
-  for (int j = a->size()-1; j > 0; --j) {
-    b->at(c->at(a->at(j))) = a->at(j);
-
-    for (int i = 0; i < b->size(); ++i) {
-    std::cout << b->at(i) << " | ";
-    }
-    std::cout << "\n";
-
-    c->at(a->at(j))--;
-
-    for (int i = 0; i < c->size(); ++i) {
-    std::cout << c->at(i) << " | ";
-    }
-    std::cout << "\n";
-
+  for (i = 0; i < a->size(); ++i) {
+    b->at(c->at(a->at(i))-1) = a->at(i);
+    --c->at(a->at(i));
   }
-  return* b;
+
+  delete a;
+  a = b;
+  return* a;
+
 }
 void docs(std::vector<int>* & a, bool print = true) {
 
   int k = a->at(0);
 
   for (int i = 0; i < a->size(); ++i) {
-    if (a->at(i) <= 0) {
+    if (a->at(i) < 0) {
       std::cout << "Your array does not the requirements for counting sort (only positive integers allowed) \n";
       return;
     }
@@ -105,7 +98,8 @@ int main(int argc, char* argv[])
   std::vector<int>* t1 = new std::vector<int>{3, 7, 8, 5, 2, 1, 9, 5, 4};
   std::vector<char>* t2 = new std::vector<char>{'c', 'f', 'g', 'd', 'b', 'a', 'h', 'c', 'h'};
   std::vector<int>* t3 = new std::vector<int>{-3, 7, 8, -5, -2, 1, 9, 5, -4};
-  std::vector<int>* t4 = new std::vector<int>{6, 1, 2, 4, 1, 3,4, 6, 1, 3, 2};
+  std::vector<int>* t4 = new std::vector<int>{6, 1, 2, 4, 1, 3, 4, 6, 1, 3, 2};
+  std::vector<int>* t5 = new std::vector<int>{8, 1, 0, 4, 7, 3, 0, 6, 1, 7, 2};
 
   doqs(t1);
   doqs(t2);
@@ -113,6 +107,7 @@ int main(int argc, char* argv[])
   doqs(t3);
 
   docs(t4);
+  docs(t5);
 
   return 0;
  }
