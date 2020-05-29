@@ -107,7 +107,7 @@ void build() {
      return;
    }
   std::vector<int>* a = new std::vector<int>(length);
-  std::cout << "please enter now its content\n";
+  std::cout << "please enter now its content, seperated by spaces\n";
   int element;
   for (int i = 0; i < a->size(); ++i) {
     std::cin >> element;
