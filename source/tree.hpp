@@ -8,7 +8,7 @@
 class Tree;
 
 struct Node {
-  int key;
+  int key = 0;
   Node* parent = nullptr;
   Node* right = nullptr;
   Node* left = nullptr;
@@ -17,11 +17,11 @@ struct Node {
 class Tree {
   public:
 
-  bool isempty() {
-    return (root_ == nullptr) ? true: false;
+  bool isempty() const {
+    return (root_ == nullptr) ? true : false;
   }
 
-  Node* root() {
+  Node* root() const {
     return root_;
   }
 /*
@@ -29,7 +29,7 @@ currnode is set to the very top of the tree, then we check if the key is equal t
 if it is smaller, we go to the left child node (if it exsists)
 if it is bigger, we go to the ricght child node (if it exsists)
 */
-  Node* search(int i) {
+  Node* search(int i) const {
     if (isempty()) return nullptr;
     Node* currnode = root_;
     while (currnode->key != i) {
@@ -47,7 +47,7 @@ if it is bigger, we go to the ricght child node (if it exsists)
 /*
 iterates down the right hand side of the graph to find the biggest key value
 */
-  Node* maximum() {
+  Node* maximum() const {
     if (isempty()) return nullptr;
     Node* currnode = root_;
     while ((currnode->right) != nullptr) {
@@ -58,7 +58,7 @@ iterates down the right hand side of the graph to find the biggest key value
 /*
 iterates down the left hand side of the graph to find the smallest key value
 */
-  Node* minimum() {
+  Node* minimum() const {
   if (isempty()) return nullptr;
     Node* currnode = root_;
     while ((currnode->left) != nullptr) {
@@ -70,7 +70,7 @@ iterates down the left hand side of the graph to find the smallest key value
 first tests if the node is the maximum (then there would be no successor)
 then we search the tree, beginning from the root, and search for the smallest key value that is bigger than the key from n
 */
-  Node* successor(Node* n) {
+  Node* successor(Node* n) const {
     if (n->right == nullptr) return nullptr;
     Node* currnode = n->right;
     while (true) {
@@ -88,7 +88,7 @@ then we search the tree, beginning from the root, and search for the smallest ke
 first tests if the node is the minimum (then there would be no successor)
 then we search the tree, beginning from the root, and search for the biggest key value that is smaller than the key from n
 */
-  Node* predecessor(Node* n) {
+  Node* predecessor(Node* n) const {
     if (n->left == nullptr) return nullptr;
     Node* currnode = n->left;
     while (true){
@@ -104,8 +104,11 @@ then we search the tree, beginning from the root, and search for the biggest key
   }
 /*
 test if the tree is empty. If it is we set the root to the new node
+If it isn't we test if the value of the new node is bigger than the value of the node we are currently at
+based on that we decide with which node our node will be compared to next. If we reach a nullpointer
+on the correct side for our node we attach it there. 
 */
-  void add(int i){
+  void add(int i) {
     if (isempty()) {
       Node* n = new Node;
       n->key = i;
@@ -120,6 +123,7 @@ test if the tree is empty. If it is we set the root to the new node
     Node* currnode = root_;
     Node* n = new Node;
     n->key = i;
+ 
     while (true) {
       if(currnode->key < i) {
         if (currnode->right == nullptr) {
@@ -137,12 +141,18 @@ test if the tree is empty. If it is we set the root to the new node
           return;
         }
       }
+      if (currnode != nullptr) {
       (currnode->key > i) ? currnode = currnode->left : currnode = currnode->right;
+      }
+      else return;
     }
   }
-
-  void rm(Node* n){
+  /*
+  Implemented the removal of nodes based on the slides from "Three Trees"
+  */
+  void rm(Node* n) {
     if (n == nullptr) return;
+    //placeholder for swapping /replacing nodes
     Node* p;
     Node* c;
     //Option1
@@ -161,6 +171,7 @@ test if the tree is empty. If it is we set the root to the new node
     if (((n->left == nullptr) ^ (n->right == nullptr)) && (n->parent == nullptr)) {
       (n->right == nullptr) ? c = n->left : c = n->right;
       c->parent = nullptr; 
+      root_ = c;
       delete(n);
       return;
       }
@@ -178,6 +189,9 @@ test if the tree is empty. If it is we set the root to the new node
         (n->parent == nullptr) ? p = nullptr : p = n->parent;
         c = n->right;
         c->parent = p;
+        if (p != nullptr) {
+          (p->key > n->key) ? p->left = c : p->right = c;
+        }
         c->left = n->left;
         if (p == nullptr) root_ = c;
         delete(n);
@@ -197,11 +211,10 @@ it then recursively executes tostring, each adding two new lines to the string s
 after all nodes are written down, s is finished by adding a closing curly bracket.
 s is then printed to the terminal aswell as being written into tree.gv, which is then closed.
 */
-  void printBST(){
+  void printBST() const {
     std::ofstream myfile;
     myfile.open ("tree.gv");
     std::string s ("#This string will contain the dot-format description of the tree.\ndigraph G {\n");
-    root_ = root();
     tostring(root_, s);
     s.append("}\n");
     std::cout << "\n" << s << "\n";
@@ -217,7 +230,7 @@ If our node has a left child, we append "current_node_key -> left_child_key" to 
 After that is done we execute tostring for said child.
 For the right child we do basically the same, except every instance of "left" is swapped with "right"
 */
-  void tostring(Node* n, std::string& s) {
+  void tostring(Node* n, std::string& s) const {
     if (n == nullptr)return;
     if ((n->left == nullptr) && (n->right == nullptr) && (n->key == root_->key)) {
       s.append(std::to_string(n->key));
@@ -252,7 +265,7 @@ For the right child we do basically the same, except every instance of "left" is
 /*
 small helper function that gives each NIL a unique value and defines its shape as a point
 */
-  void printNIL (Node* n, std::string& s) {
+  void printNIL (Node* n, std::string& s) const {
     std::string c1 ("NIL");
     c1.append(std::to_string(n->key));
     s.append(c1);
