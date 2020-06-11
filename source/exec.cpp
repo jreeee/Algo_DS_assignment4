@@ -35,12 +35,40 @@ int main(int argc, char* argv[])
    test.printBST();
    test.rm(test.search(4));
    test.printBST();
-   Tree t1;
-   t1.add(4);
-   //t1.printBST();
-   //t1.rm(t1.root());
-   //t1.printBST();
+   
+   Tree* t = new Tree();
+   std::cout << "What would you like to do? \n\na - add node\nr - remove node\ns - search\np - print\nh - help\n";
+   std::cout << "x - max \nn - min\ns - successor \nr - predecessor\no - root\ny - empty?\ne - exit\n";
+   char in;
+   int i;
+   while(true) {
+     std::cin >> in;
 
+     if (in == 'a') {
+       std::cout << "please enter the value of the node you want to add\n";
+       std::cin >> i;
+       t->add(i);
+     }
+     if (in == 'r') {
+       std::cout << "please enter the value of the node you want to remove\n";
+       std::cin >> i;
+       Node * ptr = t->search(i);
+       (ptr == nullptr) ? std::cout << "there was no corresponding node\n" : std::cout << "node " << i << " deleted\n";
+     }
+     if (in == 's') {
+       std::cout << "please enter the value of the node you are searching\n";
+       std::cin >> i;
+       Node * ptr = t->search(i);
+       (ptr == nullptr) ? std::cout << "there was no corresponding node\n" : std::cout << "node " << i << " was found\n";
+     }
+     if (in == 'o') std::cout << "the root value is " << t->root()->key << "\n";
+     if (in == 'p') t->printBST();
+     if (in == 'y') t->isempty() ? std::cout << "the tree is empty\n" : std::cout << "the tree isn't empty\n";
+     if (in == 'x') t->isempty() ? std::cout << "the tree is empty\n" : std::cout << t->maximum()->key << " is the maximum of the tree\n";
+     if (in == 'n') t->isempty() ? std::cout << "the tree is empty\n" : std::cout << t->minimum()->key << " is the minimum of the tree\n";
+     if (in == 'h') std::cout << "a - add node\nr - remove node\ns - search\np - print\nh - help\nx - max \nn - min\ns - successor \nr - predecessor\no - root\ny - empty?\ne - exit\n";
+     if (in == 'e') break;
+   }
 
   return 0;
  }

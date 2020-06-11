@@ -110,6 +110,7 @@ test if the tree is empty. If it is we set the root to the new node
       Node* n = new Node;
       n->key = i;
       root_ = n;
+      std::cout << "node " << i << " successfully added to the tree\n";
       return;
     }
     if (search(i) != nullptr) {
@@ -124,6 +125,7 @@ test if the tree is empty. If it is we set the root to the new node
         if (currnode->right == nullptr) {
           currnode->right = n;
           n->parent = currnode;
+          std::cout << "node " << i << " successfully added to the tree\n";
           return;
         }
       }
@@ -131,6 +133,7 @@ test if the tree is empty. If it is we set the root to the new node
         if (currnode->left == nullptr) {
           currnode->left = n;
           n->parent = currnode;
+          std::cout << "node " << i << " successfully added to the tree\n";
           return;
         }
       }
@@ -198,6 +201,7 @@ s is then printed to the terminal aswell as being written into tree.gv, which is
     std::ofstream myfile;
     myfile.open ("tree.gv");
     std::string s ("#This string will contain the dot-format description of the tree.\ndigraph G {\n");
+    root_ = root();
     tostring(root_, s);
     s.append("}\n");
     std::cout << "\n" << s << "\n";
