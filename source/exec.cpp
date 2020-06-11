@@ -8,6 +8,8 @@ int main(int argc, char* argv[])
    Tree t;
    //building a tree and testing various methods
    std::cout << t.isempty() << "\n";
+   //it is quiet weird; when i use methods like that everything is normal
+   //when using add() in the while loop it won't properly work tho
    t.add(8);
    std::cout << t.isempty() << "\n";
    t.add(3);
