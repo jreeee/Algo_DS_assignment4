@@ -71,16 +71,17 @@ first tests if the node is the maximum (then there would be no successor)
 then we search the tree, beginning from the root, and search for the smallest key value that is bigger than the key from n
 */
   Node* successor(Node* n) {
-    if (n->key == maximum()->key) return nullptr;
-    Node* currnode = root_;
-    while (true);
-    if (n->key > currnode->key) {
-      if (currnode->right != nullptr) currnode = currnode->right;
-      else return currnode;
-    }
-    if (n->key < currnode->key) {
-      if (currnode->left != nullptr) currnode = currnode->left;
-      else return currnode->parent;
+    if (n->right == nullptr) return nullptr;
+    Node* currnode = n->right;
+    while (true) {
+      if (n->key > currnode->key) {
+        if (currnode->right != nullptr) currnode = currnode->right;
+        else return currnode;
+      }
+      if (n->key < currnode->key) {
+        if (currnode->left != nullptr) currnode = currnode->left;
+        else return currnode;
+      }
     }
   }
 /*
@@ -88,16 +89,17 @@ first tests if the node is the minimum (then there would be no successor)
 then we search the tree, beginning from the root, and search for the biggest key value that is smaller than the key from n
 */
   Node* predecessor(Node* n) {
-    if (n->key == minimum()->key) return nullptr;
-    Node* currnode = root_;
-    while (true);
-    if (n->key > currnode->key) {
-      if (currnode->left != nullptr) currnode = currnode->left;
-      else return currnode->parent;
-    }
-    if (n->key < currnode->key) {
-      if (currnode->right != nullptr) currnode = currnode->right;
-      else return currnode;
+    if (n->left == nullptr) return nullptr;
+    Node* currnode = n->left;
+    while (true){
+      if (n->key > currnode->key) {
+        if (currnode->left != nullptr) currnode = currnode->left;
+        else return currnode;
+      }
+      if (n->key < currnode->key) {
+        if (currnode->right != nullptr) currnode = currnode->right;
+        else return currnode;
+      }
     }
   }
 /*
@@ -180,7 +182,11 @@ test if the tree is empty. If it is we set the root to the new node
       }
     }
     //Option4
-
+    c = successor(n);
+    n->key = c->key;
+    rm(c);
+    delete(c);
+    return;
   }
 /*
 print() creates a file in the build folder (or overrites it), namely tree.gv 
@@ -192,7 +198,7 @@ s is then printed to the terminal aswell as being written into tree.gv, which is
     std::ofstream myfile;
     myfile.open ("tree.gv");
     std::string s ("#This string will contain the dot-format description of the tree.\ndigraph G {\n");
-    tostring(root_, s, 1);
+    tostring(root_, s);
     s.append("}\n");
     std::cout << "\n" << s << "\n";
     myfile << s;
@@ -207,7 +213,7 @@ If our node has a left child, we append "current_node_key -> left_child_key" to 
 After that is done we execute tostring for said child.
 For the right child we do basically the same, except every instance of "left" is swapped with "right"
 */
-  void tostring(Node* n, std::string& s, int i) {
+  void tostring(Node* n, std::string& s) {
     if (n == nullptr)return;
     if ((n->left == nullptr) && (n->right == nullptr) && (n->key == root_->key)) {
       s.append(std::to_string(n->key));
@@ -219,30 +225,36 @@ For the right child we do basically the same, except every instance of "left" is
     std::string c1 ("NIL");
 
     s.append(std::to_string(n->key));
-    s.append("->");
+    s.append(" -> ");
     if (n->left != nullptr) {
       s.append(std::to_string(n->left->key));
-      s.append("\n");
-      tostring(n->left, s, i++);
+      s.append(";\n");
+      tostring(n->left, s);
     }
     else {
-      c1.append(std::to_string(i));
-      s.append(c1);
-      s.append("\n");
+      printNIL(n, s);
     }
-    
     s.append(std::to_string(n->key));
-    s.append("->");
+    s.append(" -> ");
     if (n->right != nullptr) {
       s.append(std::to_string(n->right->key));
-      s.append("\n");
-      tostring(n->right, s, i++);
+      s.append(";\n");
+      tostring(n->right, s);
     }
     else {
-      c1.append(std::to_string(i));
-      s.append(c1);
-      s.append("\n");
+      printNIL(n, s);
     }
+  }
+/*
+small helper function that gives each NIL a unique value and defines its shape as a point
+*/
+  void printNIL (Node* n, std::string& s) {
+    std::string c1 ("NIL");
+    c1.append(std::to_string(n->key));
+    s.append(c1);
+    s.append(";\n");
+    s.append(c1);
+    s.append(" [shape=point];\n");
   }
 
   private:
