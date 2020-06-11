@@ -19,15 +19,23 @@ int main(int argc, char* argv[])
    test.add(13);
    test.add(4);
    test.add(7);
+   test.add(2);
    Node* root = test.search(8);
-   test.print(root);
-   test.rm(test.maximum());
+   test.printBST();
    std::cout << test.maximum()->key << "\n";
    std::cout << test.minimum()->key << "\n";
    std::cout << test.isempty() << "\n";
    test.rm(test.maximum());
    std::cout << test.maximum()->key << "\n";
-   std::cout << test.isempty() << "\n";
+   test.rm(test.search(8));
+   test.printBST();
+
+   Tree t1;
+   t1.add(4);
+   t1.printBST();
+   t1.rm(t1.root());
+   //t1.printBST();
+   
 
   return 0;
  }

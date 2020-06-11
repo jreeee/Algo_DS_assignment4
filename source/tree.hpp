@@ -20,6 +20,10 @@ class Tree {
   bool isempty() {
     return (root_ == nullptr) ? true: false;
   }
+
+  Node* root() {
+    return root_;
+  }
 /*
 currnode is set to the very top of the tree, then we check if the key is equal to the int we are searching.
 if it is smaller, we go to the left child node (if it exsists)
@@ -133,6 +137,7 @@ test if the tree is empty. If it is we set the root to the new node
   }
 
   void rm(Node* n){
+    if (n == nullptr) return;
     Node* p;
     Node* c;
     //Option1
@@ -177,22 +182,40 @@ test if the tree is empty. If it is we set the root to the new node
     //Option4
 
   }
-
-  void print(Node* n){
+/*
+print() creates a file in the build folder (or overrites it), namely tree.gv 
+it then recursively executes tostring, each adding two new lines to the string s if the node has at least one child
+after all nodes are written down, s is finished by adding a closing curly bracket.
+s is then printed to the terminal aswell as being written into tree.gv, which is then closed.
+*/
+  void printBST(){
     std::ofstream myfile;
     myfile.open ("tree.gv");
-    std::string s ("#This string will contain the dot-format description of the tree.\n");
-    s.append("digraph G {\n");
+    std::string s ("#This string will contain the dot-format description of the tree.\ndigraph G {\n");
     tostring(root_, s, 1);
     s.append("}\n");
     std::cout << "\n" << s << "\n";
     myfile << s;
     myfile.close();
   }
-
+/*
+First we check if the node is a nullpointer or if both of its children are nullpointer.
+If they are, we are done with that node.
+If that was not the case we check if the left child is a nullpointer, if it is we add one to our NIL-number
+and append it behind "current_node_key -> " in s.
+If our node has a left child, we append "current_node_key -> left_child_key" to s.
+After that is done we execute tostring for said child.
+For the right child we do basically the same, except every instance of "left" is swapped with "right"
+*/
   void tostring(Node* n, std::string& s, int i) {
     if (n == nullptr)return;
+    if ((n->left == nullptr) && (n->right == nullptr) && (n->key == root_->key)) {
+      s.append(std::to_string(n->key));
+      s.append("\n");
+      return;
+    }
     if ((n->left == nullptr) && (n->right == nullptr)) return;
+
     std::string c1 ("NIL");
 
     s.append(std::to_string(n->key));
@@ -220,7 +243,6 @@ test if the tree is empty. If it is we set the root to the new node
       s.append(c1);
       s.append("\n");
     }
-
   }
 
   private:
