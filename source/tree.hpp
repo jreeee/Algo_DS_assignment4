@@ -132,6 +132,7 @@ on the correct side for our node we attach it there.
           std::cout << "node " << i << " successfully added to the tree\n";
           return;
         }
+        else currnode = currnode ->right;
       }
       else {
         if (currnode->left == nullptr) {
@@ -140,11 +141,8 @@ on the correct side for our node we attach it there.
           std::cout << "node " << i << " successfully added to the tree\n";
           return;
         }
+        else currnode = currnode->left;
       }
-      if (currnode != nullptr) {
-      (currnode->key > i) ? currnode = currnode->left : currnode = currnode->right;
-      }
-      else return;
     }
   }
   /*
