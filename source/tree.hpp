@@ -2,6 +2,8 @@
 #define BIN_TREE
 
 #include <iostream>
+#include <fstream>
+#include <string>
 
 class Tree;
 
@@ -16,7 +18,7 @@ class Tree {
   public:
 
   bool isempty() {
-    return ((root_ == nullptr) ? true: false);
+    return (root_ == nullptr) ? true: false;
   }
 /*
 currnode is set to the very top of the tree, then we check if the key is equal to the int we are searching.
@@ -106,6 +108,7 @@ test if the tree is empty. If it is we set the root to the new node
     }
     if (search(i) != nullptr) {
       std::cout << "node with the value " << i << " already in tree\n";
+      return;
     }
     Node* currnode = root_;
     Node* n = new Node;
@@ -148,7 +151,9 @@ test if the tree is empty. If it is we set the root to the new node
     if (((n->left == nullptr) ^ (n->right == nullptr)) && (n->parent == nullptr)) {
       (n->right == nullptr) ? c = n->left : c = n->right;
       c->parent = nullptr; 
-    }
+      delete(n);
+      return;
+      }
     if ((n->left == nullptr) ^ (n->right == nullptr)) {
       p = n->parent;
       (n->right == nullptr) ? c = n->left : c = n->right;
@@ -173,7 +178,50 @@ test if the tree is empty. If it is we set the root to the new node
 
   }
 
-  void print();
+  void print(Node* n){
+    std::ofstream myfile;
+    myfile.open ("tree.gv");
+    std::string s ("#This string will contain the dot-format description of the tree.\n");
+    s.append("digraph G {\n");
+    tostring(root_, s, 1);
+    s.append("}\n");
+    std::cout << "\n" << s << "\n";
+    myfile << s;
+    myfile.close();
+  }
+
+  void tostring(Node* n, std::string& s, int i) {
+    if (n == nullptr)return;
+    if ((n->left == nullptr) && (n->right == nullptr)) return;
+    std::string c1 ("NIL");
+
+    s.append(std::to_string(n->key));
+    s.append("->");
+    if (n->left != nullptr) {
+      s.append(std::to_string(n->left->key));
+      s.append("\n");
+      tostring(n->left, s, i++);
+    }
+    else {
+      c1.append(std::to_string(i));
+      s.append(c1);
+      s.append("\n");
+    }
+    
+    s.append(std::to_string(n->key));
+    s.append("->");
+    if (n->right != nullptr) {
+      s.append(std::to_string(n->right->key));
+      s.append("\n");
+      tostring(n->right, s, i++);
+    }
+    else {
+      c1.append(std::to_string(i));
+      s.append(c1);
+      s.append("\n");
+    }
+
+  }
 
   private:
   Node* root_ = nullptr;

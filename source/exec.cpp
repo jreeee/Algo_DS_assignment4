@@ -8,17 +8,26 @@ int main(int argc, char* argv[])
    std::cout << test.isempty() << "\n";
    test.add(8);
    std::cout << test.isempty() << "\n";
-   test.add(4);
+   test.add(3);
    std::cout << test.maximum()->key << "\n";
    std::cout << test.minimum()->key << "\n";
+   test.add(10);
+   test.add(6);
+   test.add(1);
+   test.add(14);
+   test.add(3);
+   test.add(13);
+   test.add(4);
+   test.add(7);
+   Node* root = test.search(8);
+   test.print(root);
    test.rm(test.maximum());
    std::cout << test.maximum()->key << "\n";
+   std::cout << test.minimum()->key << "\n";
    std::cout << test.isempty() << "\n";
    test.rm(test.maximum());
    std::cout << test.maximum()->key << "\n";
    std::cout << test.isempty() << "\n";
-   test.rm(test.maximum());
-   std::cout << test.maximum()->key << "\n";
-   std::cout << test.isempty() << "\n";
+
   return 0;
  }
