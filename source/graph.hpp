@@ -1,5 +1,5 @@
-#ifndef GRAPH_TEMPLATE
-#define GRAPH_TEMPLATE
+#ifndef GRAPH_HPP
+#define GRAPH_HPP
 
 #include <vector>
 #include <string>
@@ -7,15 +7,15 @@
 
 // YOU CAN USE ONLY THE VECTORS, STRINGS AND MAPS FOR THIS ASSIGNMENT!
 
-class GraphTemplate {
+class Graph {
 private:
-    std::vector<NodeTemplate> nodes;
-    MinHeapTemplate *minPriorityQueue;
+    std::vector<Node> nodes;
+    MinHeap *minPriorityQueue;
     bool isDirected;
 
 public:
-    GraphTemplate(/* args */);
-    ~GraphTemplate();
+    Graph(/* args */);
+    ~Graph();
 
     // TODO: implement additional constructors
     // TODO: implement method for adding a node
@@ -25,17 +25,17 @@ public:
     // TODO: implement printGraph function that generates a file written using the dot format
 };
 
-class NodeTemplate {
+class Node {
 private:
     /* data */
     std::string label;
-    std::map<NodeTemplate, int> adjacentNodes; // the int is for the weight od the egde
-    NodeTemplate *parent;
+    std::map<Node, int> adjacentNodes; // the int is for the weight od the egde
+    Node *parent;
     int distance; // aka key
 
 public:
-    NodeTemplate(/* args */);
-    ~NodeTemplate();
+    Node(/* args */);
+    ~Node();
     
     // TODO: implement additional constructors
     // TODO: implement method for adding a connection
@@ -43,28 +43,28 @@ public:
     // TODO: implement methods for manipulating the parent and distance
 };
 
-class MinHeapTemplate {
+class MinHeap {
 private:
-    MinHeapNodeTemplate *root;
+    MinHeapNode *root;
 
 public:
-    MinHeapTemplate(/* args */);
-    ~MinHeapTemplate();
+    MinHeap(/* args */);
+    ~MinHeap();
     // TODO: implement method for restructuring the min-priority Queue
     // TODO: implement method for extracting the smaller element from the min-priority Queue
 };
 
-class MinHeapNodeTemplate{
+class MinHeapNode{
 private:
     /* data */
-    NodeTemplate *node;
-    MinHeapNodeTemplate *parent;
-    MinHeapNodeTemplate *left;
-    MinHeapNodeTemplate *right;
+    Node *node;
+    MinHeapNode *parent;
+    MinHeapNode *left;
+    MinHeapNode *right;
 
 public:
-    MinHeapNodeTemplate(/* args */);
-    ~MinHeapNodeTemplate();
+    MinHeapNode(/* args */);
+    ~MinHeapNode();
 
     // TODO: implement additional constructors
 };

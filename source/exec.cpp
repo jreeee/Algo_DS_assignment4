@@ -1,5 +1,5 @@
 #include <iostream>
-#include "GraphTemplate.hpp"
+#include "graph.hpp"
 
 
 int main(int argc, char* argv[])
