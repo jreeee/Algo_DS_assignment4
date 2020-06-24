@@ -4,43 +4,44 @@
 #include <vector>
 #include <string>
 #include <map>
-
-// YOU CAN USE ONLY THE VECTORS, STRINGS AND MAPS FOR THIS ASSIGNMENT!
+#include <limits>
 
 class Graph {
-private:
-    std::vector<Node> nodes;
-    MinHeap *minPriorityQueue;
-    bool isDirected;
 
-public:
-    Graph(/* args */);
+    public:
+    Graph();
+    Graph(bool b);
+    Graph(std::vector<Node> const& vn, MinHeap *mh, bool b);
     ~Graph();
 
-    // TODO: implement additional constructors
-    // TODO: implement method for adding a node
-    // TODO: implement method for removing a node
-    // TODO: implement Prim
-    // TODO: implement Bellman-Ford
-    // TODO: implement printGraph function that generates a file written using the dot format
+    void add();
+    bool rm(int val);
+    bool prim();
+    bool beFo();
+    void ptgraph();
+
+    private:
+    std::vector<Node> nodes_;
+    MinHeap *minPriorityQueue_;
+    bool isDirected_;
 };
 
-class Node {
-private:
+struct Node {
     /* data */
     std::string label;
-    std::map<Node, int> adjacentNodes; // the int is for the weight od the egde
-    Node *parent;
-    int distance; // aka key
-
-public:
-    Node(/* args */);
+    std::map<Node, int> adjacentNodes{}; // the int is for the weight od the egde
+    Node *parent = nullptr;
+    int distance = std::numeric_limits<int>::max(); // aka key, set by default to infinity
+    /* constructors */
+    Node(std::string name);
     ~Node();
-    
-    // TODO: implement additional constructors
-    // TODO: implement method for adding a connection
-    // TODO: implement method for removing a connection
-    // TODO: implement methods for manipulating the parent and distance
+    /* functions / methods */
+    bool operator==(Node const& n) const;
+    //we don't need a change weight method since we can just overwrite with connect()
+    void connect(int weight, Node *n);
+    void rmcon(Node *n);
+    void chparent(Node *n);
+
 };
 
 class MinHeap {
@@ -50,23 +51,22 @@ private:
 public:
     MinHeap(/* args */);
     ~MinHeap();
-    // TODO: implement method for restructuring the min-priority Queue
-    // TODO: implement method for extracting the smaller element from the min-priority Queue
+    MinHeapNode generate(std::vector<Node> const& vn);
+    MinHeapNode restruct();
+    MinHeapNode add();
+    int extract();
+
 };
 
-class MinHeapNode{
-private:
+struct MinHeapNode{
     /* data */
     Node *node;
     MinHeapNode *parent;
     MinHeapNode *left;
     MinHeapNode *right;
-
-public:
+    /* constructors */
     MinHeapNode(/* args */);
     ~MinHeapNode();
-
-    // TODO: implement additional constructors
 };
 
 #endif
