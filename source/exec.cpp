@@ -49,7 +49,10 @@ int main(int argc, char* argv[])
 
    g1.ptgraph();
    g2.ptgraph();
-   
+
+   bool test = g1.beFo(nd1);
+   std::cout << test << "\n";
+   g1.ptgraph();
 
   return 0;
  }

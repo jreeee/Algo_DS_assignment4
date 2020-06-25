@@ -33,14 +33,14 @@ struct MinHeapNode {
     int key  = std::numeric_limits<int>::max();
 };
 
-
+/*
 class MinHeap {
 private:
     MinHeapNode *root;
     int size;
 
 public:
-    MinHeap(/* args */);
+    MinHeap();
     ~MinHeap();
     MinHeapNode generate(std::vector<Node> const& vn);
     MinHeapNode restruct();
@@ -49,7 +49,7 @@ public:
     int extract();
 
 };
-
+*/
 class Graph {
 
     public:
@@ -59,12 +59,14 @@ class Graph {
     Node* add(Node n);
     void rm(Node *n);
     bool prim();
-    bool beFo();
+    void prep();
+    bool beFo(Node *n);
     void ptgraph() const;
+    std::vector<Node*> sortkeys();
 
     private:
     std::vector<Node*> nodes_;
-    MinHeap *minPriorityQueue_;
+    //MinHeap *minPriorityQueue_;
     bool isDirected_;
 };
 

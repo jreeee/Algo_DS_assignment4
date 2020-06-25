@@ -44,6 +44,8 @@ void Node::ptNode(std::string & s, bool dir) const {
       s.append(i.first->label);
       s.append(" [label = ");
       s.append(std::to_string(i.second));
+      s.append(", color = ");
+      s.append((i.first->parent == this) ? "green" : "black");
       s.append("];\n");
     }
   }
@@ -107,8 +109,51 @@ void Graph::rm(Node *n) {
   }
 }
 
-bool Graph::prim() {
+std::vector<Node*> Graph::sortkeys() {
+  std::vector<Node*> tmp {nodes_};
+  for (int j = 0; j < tmp.size(); ++j) {
+    for (int i = j; i < tmp.size(); ++i) {
+      if (tmp[j]->distance > tmp[i]->distance) std::swap(tmp[i], tmp[j]);
+    }
+  }
+  return tmp;
+}
 
+void Graph::prep() {
+  for (auto &i : nodes_) {
+    i->distance = std::numeric_limits<int>::max();
+    i->parent = nullptr;
+  }
+}
+
+bool Graph::prim() {
+  auto root = nodes_.front();
+  root->distance = 0;
+  prep();
+  sortkeys();
+
+}
+//still needs some work
+bool Graph::beFo(Node *n) {
+  prep();
+  n->distance = 0;
+  for (int size = 1; size < nodes_.size(); ++size) {
+    for (auto &i : nodes_) {
+      for (auto j : i->adjacentNodes) {
+        //relaxing, if possible
+        if (j.first->distance > (j.second + i->distance)) {
+          j.first->parent = i;
+          j.first->distance = j.second + i->distance;
+        }
+      }
+    }
+  }
+  for (auto &i : nodes_) {
+    for (auto j : i->adjacentNodes) {
+      if (j.first->distance > (j.second + i->distance)) return false;
+    }
+  }
+  return true;
 }
 
 void Graph::ptgraph() const {
