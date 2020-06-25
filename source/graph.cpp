@@ -14,6 +14,9 @@ as well as connect() which adds (or overwrites) a connection and its weight
 between this node and the node provided as an argument
 rmcon tries to remove the weight and connection
 chparent assigns the node a new parent node
+ptnode gets passed on a string and iterates trough its adjacent nodes, appending them
+to the string. depending on the type of graph we switch the connection symbol between nodes
+and depending on if they have a parent node we colour their connection  
 */
 Node::Node(std::string name) : label{name} {}
 
@@ -85,18 +88,44 @@ MinHeapNode MinHeap::generate(std::vector<Node> const& vn) {
 }
 */
 
+/*
+Implementation of the Graph
+
+when constructing you can choose to either have a directed or undirected graph
+
+to that graph you can add Nodes with add() or remove with rm()
+since I was unable to implement the MinHeap I tried to substitute it with an array
+this array contains Nodes and their key/weight/distance.
+this was needed for prim().
+I also implemented a function which sets all Nodes to the 
+highest possible int and their parents to the nullpointer, which is used for both
+prim() and beFo().
+I couldn't get prim to work, however beFo() somewhat runs.
+for some reason I struggeled with this assignment much more than the other ones.
+lastly there is a print function that works really well, you only have to write
+the filename as an argument and it will make a ile with that title containing the graph
+in graphiz.
+*/
 Graph::Graph(bool b) : isDirected_{b} {}
 
 bool Graph::directed() const {
   return isDirected_;
 }
 
+//method to add nodes to the graph
 Node* Graph::add(Node n) {
+  //checking if there is already a node with the same name
+  for (auto i : nodes_) {
+    std::cerr << "Node already in graph\n";
+    if (n.label == i->label) return i;
+  }
+  //if not we create a new node and add it to the node_ - vector
   auto addedNode = new Node{n};
   nodes_.push_back(addedNode);
   return addedNode;
 }
 
+//method to remove nodes from the graph
 void Graph::rm(Node *n) {
   for (auto i = nodes_.begin(); i != nodes_.end(); ++i) {
     if (n == *i) {
@@ -109,16 +138,20 @@ void Graph::rm(Node *n) {
   }
 }
 
-std::vector<Node*> Graph::sortkeys() {
-  std::vector<Node*> tmp {nodes_};
-  for (int j = 0; j < tmp.size(); ++j) {
-    for (int i = j; i < tmp.size(); ++i) {
-      if (tmp[j]->distance > tmp[i]->distance) std::swap(tmp[i], tmp[j]);
+//sorts the array it gets
+std::vector<Node*> Graph::sortkeys(std::vector<Node*> & vn) {
+  for (int i = 0; i < vn.size(); ++i) {
+    for (int j = i; j < vn.size(); ++j) {
+      if (vn[j]->distance > vn[i]->distance) std::swap(vn[j], vn[i]);
     }
   }
-  return tmp;
+  for (auto i : vn) {
+    std::cout << i->distance <<"\n";
+  }
+  return vn;
 }
 
+//a basic function called before our algorithms to initialize the nodes correctly
 void Graph::prep() {
   for (auto &i : nodes_) {
     i->distance = std::numeric_limits<int>::max();
@@ -126,21 +159,48 @@ void Graph::prep() {
   }
 }
 
+//I give up, I can't get prim() to work, I don't even know what I am doing anymore
 bool Graph::prim() {
+  //this is our "fake" MinHeap, storing Nodes and their values
+  std::vector<Node*> tmp;
+  for (auto i : nodes_) {
+    for (auto j : i->adjacentNodes) {
+      auto n = new Node{*j.first};
+      n->distance = j.second;
+      tmp.push_back(n);
+    }
+  }
   auto root = nodes_.front();
   root->distance = 0;
   prep();
-  sortkeys();
-
+  while (tmp.empty() == false){
+    auto n = tmp.back();
+    tmp.pop_back();
+    for (auto i : n->adjacentNodes) {
+      bool cond1 = false;
+      bool cond2 = false;
+      for (auto j : tmp) {
+        if (j == i.first) {
+          cond1 == true;
+          break;
+        }
+      }
+      if (i.second < i.first->distance) cond2 = true;
+      if (cond1 && cond2) {
+        i.first->parent = n;
+        i.first->distance = i.second;
+      }
+    }
+  }
 }
-//still needs some work
+//Bellmann Ford kinda works
 bool Graph::beFo(Node *n) {
   prep();
   n->distance = 0;
   for (int size = 1; size < nodes_.size(); ++size) {
     for (auto &i : nodes_) {
       for (auto j : i->adjacentNodes) {
-        //relaxing, if possible
+        //relaxing it, if possible
         if (j.first->distance > (j.second + i->distance)) {
           j.first->parent = i;
           j.first->distance = j.second + i->distance;
@@ -148,6 +208,7 @@ bool Graph::beFo(Node *n) {
       }
     }
   }
+  //looking for negative cycles
   for (auto &i : nodes_) {
     for (auto j : i->adjacentNodes) {
       if (j.first->distance > (j.second + i->distance)) return false;
@@ -156,10 +217,10 @@ bool Graph::beFo(Node *n) {
   return true;
 }
 
-void Graph::ptgraph() const {
+void Graph::ptgraph(std::string const& fname) const {
   bool dir = isDirected_;
   std::ofstream myfile;
-  myfile.open ("graph.gv");
+  myfile.open(fname);
   std::string s ("#This file contains the dot-format description of the graph.\n");
   s.append(isDirected_ ? "digraph {\n\n" : "graph {\n\n");
   for (auto const& i : nodes_) {

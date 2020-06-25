@@ -47,12 +47,16 @@ int main(int argc, char* argv[])
    nu5->connect(4, nu3);
    nu6->connect(2, nu5);
 
-   g1.ptgraph();
-   g2.ptgraph();
+   g1.ptgraph("graph1.gv");
+   g2.ptgraph("graph2.gv");
 
    bool test = g1.beFo(nd1);
    std::cout << test << "\n";
-   g1.ptgraph();
+   g1.ptgraph("graph1.gv");
 
+   test = g2.prim();
+   std::cout << test << "\n";
+   g2.ptgraph("graph2.gv");
+ 
   return 0;
  }

@@ -8,24 +8,25 @@
 
 
 struct Node {
-    /* data */
+    
     std::string label;
     std::map<Node*, int> adjacentNodes{}; // the int is for the weight od the egde
     Node *parent = nullptr;
     int distance = std::numeric_limits<int>::max(); // aka key, set by default to infinity
-    /* constructors */
+   
     Node(std::string name);
-    /* functions & methods */
+    
     bool operator==(Node const& n) const;
-    //we don't need a change weight method since we can just overwrite with connect()
     void connect(int weight, Node *n);
     void rmcon(Node *n);
     void chparent(Node *n);
     void ptNode(std::string & s, bool dir) const;
 };
 
+/*
+I couldn't get that to work properly, so I am using a workaround by utilizing a array
 struct MinHeapNode {
-    /* data */
+    
     Node *node = nullptr;
     MinHeapNode *parent = nullptr;
     MinHeapNode *left = nullptr;
@@ -33,7 +34,7 @@ struct MinHeapNode {
     int key  = std::numeric_limits<int>::max();
 };
 
-/*
+
 class MinHeap {
 private:
     MinHeapNode *root;
@@ -53,6 +54,7 @@ public:
 class Graph {
 
     public:
+
     Graph(bool b);
 
     bool directed() const;
@@ -61,8 +63,8 @@ class Graph {
     bool prim();
     void prep();
     bool beFo(Node *n);
-    void ptgraph() const;
-    std::vector<Node*> sortkeys();
+    void ptgraph(std::string const& fname) const;
+    std::vector<Node*> sortkeys(std::vector<Node*> & vn);
 
     private:
     std::vector<Node*> nodes_;
