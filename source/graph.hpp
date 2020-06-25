@@ -6,30 +6,11 @@
 #include <map>
 #include <limits>
 
-class Graph {
-
-    public:
-    Graph();
-    Graph(bool b);
-    Graph(std::vector<Node> const& vn, MinHeap *mh, bool b);
-    ~Graph();
-
-    void add();
-    bool rm(int val);
-    bool prim();
-    bool beFo();
-    void ptgraph();
-
-    private:
-    std::vector<Node> nodes_;
-    MinHeap *minPriorityQueue_;
-    bool isDirected_;
-};
 
 struct Node {
     /* data */
     std::string label;
-    std::map<Node, int> adjacentNodes{}; // the int is for the weight od the egde
+    std::map<Node*, int> adjacentNodes{}; // the int is for the weight od the egde
     Node *parent = nullptr;
     int distance = std::numeric_limits<int>::max(); // aka key, set by default to infinity
     /* constructors */
@@ -41,8 +22,20 @@ struct Node {
     void connect(int weight, Node *n);
     void rmcon(Node *n);
     void chparent(Node *n);
-
+    std::string ptNode(std::string & s) const;
 };
+
+struct MinHeapNode {
+    /* data */
+    Node *node;
+    MinHeapNode *parent;
+    MinHeapNode *left;
+    MinHeapNode *right;
+    /* constructors */
+    MinHeapNode(/* args */);
+    ~MinHeapNode();
+};
+
 
 class MinHeap {
 private:
@@ -58,15 +51,24 @@ public:
 
 };
 
-struct MinHeapNode{
-    /* data */
-    Node *node;
-    MinHeapNode *parent;
-    MinHeapNode *left;
-    MinHeapNode *right;
-    /* constructors */
-    MinHeapNode(/* args */);
-    ~MinHeapNode();
+class Graph {
+
+    public:
+    Graph();
+    Graph(bool b);
+    Graph(std::vector<Node*> const& vn, MinHeap *mh, bool b);
+    ~Graph();
+
+    void add(Node n);
+    void rm(Node *n);
+    bool prim();
+    bool beFo();
+    void ptgraph() const;
+
+    private:
+    std::vector<Node*> nodes_;
+    MinHeap *minPriorityQueue_;
+    bool isDirected_;
 };
 
 #endif
