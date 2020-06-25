@@ -15,14 +15,14 @@ struct Node {
     int distance = std::numeric_limits<int>::max(); // aka key, set by default to infinity
     /* constructors */
     Node(std::string name);
-    ~Node();
+    //~Node();
     /* functions / methods */
     bool operator==(Node const& n) const;
     //we don't need a change weight method since we can just overwrite with connect()
     void connect(int weight, Node *n);
     void rmcon(Node *n);
     void chparent(Node *n);
-    std::string ptNode(std::string & s) const;
+    void ptNode(std::string & s, bool dir) const;
 };
 
 struct MinHeapNode {
@@ -54,15 +54,14 @@ public:
 class Graph {
 
     public:
-    Graph();
     Graph(bool b);
-    Graph(std::vector<Node*> const& vn, MinHeap *mh, bool b);
-    ~Graph();
+    //~Graph();
 
-    void add(Node n);
+    bool directed() const;
+    Node* add(Node n);
     void rm(Node *n);
-    bool prim();
-    bool beFo();
+    //bool prim();
+    //bool beFo();
     void ptgraph() const;
 
     private:
