@@ -17,8 +17,6 @@ chparent assigns the node a new parent node
 */
 Node::Node(std::string name) : label{name} {}
 
-//Node::~Node() {} //TODO
-
 bool Node::operator==(Node const& n) const {
   return n.label == label;
 }
@@ -50,19 +48,42 @@ void Node::ptNode(std::string & s, bool dir) const {
     }
   }
 }
+/* 
+Implementation of MinHeap
 
-MinHeap::MinHeap() {
-  //root = new MinHeapNode(generate(std::vector<Node> const& vn));
+MinHeap::MinHeap() {}
+
+void MinHeap::add(Node *n) {
+  size++;
+  if (root == nullptr) {
+    root = new MinHeapNode{n};
+    return;
+  }
+  if (root->node->distance > n->distance) {
+    auto tmp = new MinHeapNode{n};
+    root->parent = tmp;
+    tmp->left = root;
+    root = tmp;
+    restruct();
+    return;
+  }
+  auto tmp = root;
+  while ((n->distance > tmp->left->node->distance ) && (n->distance > tmp->right->node->distance)) {
+    //Do sth
+  }
+}
+
+void MinHeap::swap(MinHeapNode* one, MinHeapNode* two){
+  std::swap(one->key, two->key);
+  std::swap(one->node, two->node);
 }
 
 MinHeapNode MinHeap::generate(std::vector<Node> const& vn) {
-  for (auto i : vn) new Node{i};//do sth
+  //for (auto i : vn) new HeapNode{Node{i}};
 }
-
+*/
 
 Graph::Graph(bool b) : isDirected_{b} {}
-
-//Graph::~Graph() {} //TODO
 
 bool Graph::directed() const {
   return isDirected_;
@@ -84,6 +105,10 @@ void Graph::rm(Node *n) {
       return;
     }
   }
+}
+
+bool Graph::prim() {
+
 }
 
 void Graph::ptgraph() const {
