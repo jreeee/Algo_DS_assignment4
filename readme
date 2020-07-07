@@ -1,4 +1,4 @@
-Alogorithms and Data Structures - Assignment 4
+Algorithms and Data Structures - Assignment 4
 
 to successfully run the code there are three steps:
 
@@ -11,6 +11,3 @@ then you can run the code by typing ./source/exec
 to get to the code itself (if you are in "build")
 cd ..
 cd source
-
-
-
