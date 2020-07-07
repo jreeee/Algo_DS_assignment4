@@ -1,3 +1,5 @@
+Alogorithms and Data Structures - Assignment 4
+
 to successfully run the code there are three steps:
 
 make a directory "build" (mkdir build) and go there (cd build)
@@ -5,7 +7,6 @@ cmake ..
 make
 
 then you can run the code by typing ./source/exec
-the tree.gv file will also be in the "build" folder
 
 to get to the code itself (if you are in "build")
 cd ..
