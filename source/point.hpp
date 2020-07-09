@@ -1,6 +1,7 @@
 #ifndef POINT_HPP
 #define POINT_HPP
-#include <cmath>
+#include <cmath>  //sqrt()
+#include <vector> //since this file is included in all other files so is vector
 
 //basic struct containing the x and y coordinates stored as int
 struct point {
@@ -16,7 +17,7 @@ float dist(point const& a, point const& b) {
   return sqrt(x_ * x_ + y_ * y_);
 }
 
-//function to check if two points are the same point
+//function to check if two points are in fact the same point
 bool p_eq(point const& a, point const& b) {
   return (a.id == b.id);
 }

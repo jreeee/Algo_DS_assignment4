@@ -6,8 +6,14 @@ make a directory "build" (mkdir build) and go there (cd build)
 cmake ..
 make
 
-then you can run the code by typing ./source/exec
+then you can run the code by typing ./source/algodat4
 
 to get to the code itself (if you are in "build")
 cd ..
 cd source
+
+the following standard c++ libraries were used:
+-vector
+-cmath
+-iostream
+-cstdlib

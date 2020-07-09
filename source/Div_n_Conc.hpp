@@ -5,9 +5,6 @@
 #include "naive.hpp"  //used if f_c_p needs to compare three points
 #include "point.hpp"
 
-#include <vector>   
-#include <cmath>
-
 //implemented combine as shown in the slides
 std::pair<point, point> combine(std::vector<point> & y, int l_x, std::pair<point, point> p1_p2, std::pair<point, point> p3_p4) {
 
@@ -39,7 +36,7 @@ std::pair<point, point> combine(std::vector<point> & y, int l_x, std::pair<point
       ++j;
     }
   }
-  
+
   return p5_p6;
 }
 

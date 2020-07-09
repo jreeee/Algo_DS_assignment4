@@ -2,7 +2,6 @@
 #define MS_HPP
 
 #include "point.hpp"
-#include <vector>
 
 /*
 merge, implemented based mostly on the slides with slight variations here and there

@@ -2,7 +2,6 @@
 #define NAIVE_HPP
 
 #include "point.hpp"
-#include <vector>
 
 /*
 bruteforcing the smallest element by comparing every point with every other point
