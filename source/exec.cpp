@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
 
   //printing out all the points that are in the set
   std::cout << "-Done; the following points are in the set:\n\n";
-  for (auto i : pts) {
+  for (auto const& i : pts) {
     std::cout << "-> (" << i.x << "|" << i.y << ")\n";
   }
 
@@ -51,13 +51,15 @@ int main(int argc, char* argv[]) {
   std::cout << "\n\n-using the naive Algorithm:\n\n";
   auto res = naive_alg(pts);
   auto dst = dist(res.first, res.second);
-  std::cout << "=>the closest points are (" << res.first.x << "|" << res.first.y << "), (" << res.second.x << "|" << res.second.y << ") with a distance of " << dst << "\n\n";
+  std::cout << "=>the closest points are (" << res.first.x << "|" << res.first.y << "), (" 
+            << res.second.x << "|" << res.second.y << ") with a distance of " << dst << "\n\n";
 
   //using divide and conquer to get the closest points
   std::cout << "-using divide and conquer:\n\n";
   res = div_n_conc(pts);
   dst = dist(res.first, res.second);
-  std::cout << "=>the closest points are (" << res.first.x << "|" << res.first.y << "), (" << res.second.x << "|" << res.second.y << ") with a distance of " << dst << "\n\n";
+  std::cout << "=>the closest points are (" << res.first.x << "|" << res.first.y << "), (" 
+            << res.second.x << "|" << res.second.y << ") with a distance of " << dst << "\n\n";
 
   //printing out the axis?
   char input;
@@ -65,7 +67,8 @@ int main(int argc, char* argv[]) {
   std::cin >> input;
   if ((input == 'y') || (input == 'Y')) {
 
-    //since they are calculated in a different function we have to make new ones and sort them to display them properly
+    //since they are calculated in a different function 
+    //we have to make new ones and sort them to display everything properly
     std::vector<point> x_ax{pts};
     std::vector<point> y_ax{pts};
     merge_sort(x_ax, 0, x_ax.size()-1, true);
@@ -75,12 +78,12 @@ int main(int argc, char* argv[]) {
 
     //printing the x and y axis
     std::cout << "\n-the x axis looks like this:\n\n";
-    for (auto i : x_ax) {
+    for (auto const& i : x_ax) {
       std::cout << "-> (" << i.x << "|" << i.y << ")\n";
     }
 
     std::cout << "\n\n-the y axis looks like this:\n\n";
-    for (auto i : y_ax) {
+    for (auto const& i : y_ax) {
       std::cout << "-> (" << i.x << "|" << i.y << ")\n";
     }
   }

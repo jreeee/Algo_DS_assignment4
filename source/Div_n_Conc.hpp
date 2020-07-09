@@ -6,7 +6,9 @@
 #include "point.hpp"
 
 //implemented combine as shown in the slides
-std::pair<point, point> combine(std::vector<point> & y, int l_x, std::pair<point, point> p1_p2, std::pair<point, point> p3_p4) {
+std::pair<point, point> combine(std::vector<point> & y, int l_x, 
+                                std::pair<point, point> p1_p2, 
+                                std::pair<point, point> p3_p4) {
 
   auto d1 = dist(p1_p2.first, p1_p2.second);
   auto d2 = dist(p3_p4.first, p3_p4.second);
@@ -45,7 +47,8 @@ implemented find_closest_points similar to the slides
 added support for edge cases i.e. the size of x being 2 or 3
 other than that it is pretty much what stood on the slides
 */
-std::pair<point, point> find_closest_points(std::vector<point> & x, std::vector<point> & y) {
+std::pair<point, point> find_closest_points(std::vector<point> & x, 
+                                            std::vector<point> & y) {
 
   //edge cases
   if (x.size() == 2) {

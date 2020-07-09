@@ -12,9 +12,9 @@ struct point {
 
 //function to calculate the distance between two points
 float dist(point const& a, point const& b) {
-  int x_ = abs(a.x - b.x);
-  int y_ = abs(a.y - b.y);
-  return sqrt(x_ * x_ + y_ * y_);
+  auto x_ = pow((a.x - b.x), 2.0);
+  int y_ = pow((a.y - b.y), 2.0);
+  return sqrt(x_ + y_);
 }
 
 //function to check if two points are in fact the same point

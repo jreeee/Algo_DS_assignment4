@@ -65,7 +65,8 @@ void merge(std::vector<point> & vec, int lhs, int mid, int rhs, bool sortx) {
   }
 }
 
-//merge sort, implemented based on the slides provided plus additional bool to differentiate between sort_x and sort_y
+//merge sort, implemented based on the slides provided 
+//plus additional bool to differentiate between sort_x and sort_y
 void merge_sort(std::vector<point> & vec, int lhs, int rhs, bool sortx) {
   if (lhs < rhs) {
     int mid = floor(lhs + (rhs - lhs) / 2);
@@ -83,8 +84,9 @@ since we have a sorted array for the x value,
 we can simply iterate over the array and check which elements have the same x value.
 if we find an element which shares the same x value as its successor we check
 how many more elements have that specific x value. once we have all we can just
-use merge sort and start at the first element with te value and end at the last element with that value.
-sorting for x is analog to sorting for y.
+use merge sort and start at the first element with the value 
+and end at the last element with that value. 
+Sorting for x is analog to sorting for y.
 sortx is used the same way as in merge sort; to differentiate if you want to sort for x or y.
 however the value is swapped; sortx = true means that the array is already sorted for x.
 This is to keep it consistent with merge sort, otherwise the call to sort for x would be

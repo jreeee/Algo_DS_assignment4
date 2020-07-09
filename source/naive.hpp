@@ -8,7 +8,8 @@ bruteforcing the smallest element by comparing every point with every other poin
 very inefficient but accurate
 checks every point i with every point j, the ony problem is that it can't when there
 are two identical points since it has to make sure not to return the distance when 
-i = vec[n] and j = vec[n]. This brings the problem that it can't detect two identical points
+i = vec[n] and j = vec[n]. 
+This brings the problem that it can't detect two identical points
 with a different n (even when I tried to implement a check it wouldn't work)
 I circumvented this by giving each point a distinct id, and checking that.
 */
