@@ -47,7 +47,9 @@ int main(int argc, char* argv[]) {
   std::vector<point> x_ax{pts};
   std::vector<point> y_ax{pts};
   merge_sort(x_ax, 0, x_ax.size()-1, true);
+  partial_sort(x_ax, true);
   merge_sort(y_ax, 0, y_ax.size()-1, false);
+  partial_sort(y_ax, false);
   std::cout << "\n\n";
   for (auto i : x_ax) {
     std::cout << "-> " << i.x << " " << i.y << "\n";
@@ -56,5 +58,8 @@ int main(int argc, char* argv[]) {
   for (auto i : y_ax) {
     std::cout << "-> " << i.x << " " << i.y << "\n";
   }
+  auto res = find_closest_points(x_ax, y_ax);
+  auto dst = dist(res.first, res.second);
+  std::cout << "the closest points are " << res.first.x << " | " << res.first.y << ", " << res.second.x << " | " << res.second.y << " with a distance of " << dst << "\n";
   return 0;
 }

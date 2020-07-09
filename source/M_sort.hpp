@@ -18,13 +18,6 @@ void merge(std::vector<point> & vec, int lhs, int mid, int rhs, bool sortx) {
   for (j = 0; j < r_s; ++j) {
     r_a[j] = vec[mid + j + 1];
   }
-  for (auto i : l_a) {
-    std::cout << "\n" << i.x << " " << i.y <<", ";
-  }
-  for (auto i : r_a) {
-    std::cout << "\n" << i.x << " " << i.y <<", ";
-  }
-  std::cout << "\n";
 
   i = j = 0;
   k = lhs;
@@ -53,7 +46,7 @@ void merge(std::vector<point> & vec, int lhs, int mid, int rhs, bool sortx) {
   }
   else {
     while((i < l_s) && (j < r_s)) {
-      if ((l_a[i].y <= r_a[j].y) ) { //&& (l_a[i].y <= r_a[j].y)
+      if ((l_a[i].y <= r_a[j].y) ) { //&& (l_a[i].y <= r_a[j].y) needs should check, that x is also ascendig
         vec[k] = l_a[i];
         ++i;
       }
@@ -82,6 +75,32 @@ void merge_sort(std::vector<point> & vec, int lhs, int rhs, bool sortx) {
     merge_sort(vec, lhs, mid, sortx);
     merge_sort(vec, mid+1, rhs, sortx);
     merge(vec, lhs, mid, rhs, sortx);
+  }
+}
+
+void partial_sort(std::vector<point> & vec, bool sortx) {
+  int bg = 0;
+  if (sortx) {
+    for (int i = 0; i < vec.size()-1; ++i) {
+      bg = i;
+      while ((i < vec.size()-1) && (vec[i].x == vec[i+1].x)) {
+        ++i;
+      }
+      if (bg != i) {
+        merge_sort(vec, bg, i, false);
+      }
+    }
+  }
+  else {
+    for (int i = 0; i < vec.size()-1; ++i) {
+      bg = i;
+      while ((i < vec.size()-1) && (vec[i].y == vec[i+1].y)) {
+        ++i;
+      }
+      if (bg != i) {
+        merge_sort(vec, bg, i, true);
+      }
+    }
   }
 }
 
