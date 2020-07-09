@@ -8,7 +8,7 @@ make
 
 then you can run the code by typing ./source/algodat4
 
-to get to the code itself (if you are in "build")
+to get to the source code itself (if you are in "build")
 cd ..
 cd source
 
