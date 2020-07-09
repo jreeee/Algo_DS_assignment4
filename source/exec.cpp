@@ -1,4 +1,5 @@
-//#include"Div_n_Conc.hpp"
+#include "Div_n_Conc.hpp"
+#include "M_sort.hpp"
 #include "point.hpp"
 #include <vector>     //std::vector<>
 #include <set>        //std::set<>
@@ -42,6 +43,13 @@ int main(int argc, char* argv[]) {
   std::cout << "-Generating complete: the following points are in the set:\n\n";
   for (auto i : pts) {
     std::cout << "->" << i.x << " " << i.y << "\n";
+  }
+  std::vector<point> x_ax{pts};
+  std::vector<point> y_ax{pts};
+  merge_sort(x_ax, 1, x_ax.size(), true);
+  merge_sort(y_ax, 1, y_ax.size(), false);
+  for (auto i : x_ax) {
+    std::cout << "-> " << i.x << " " << i.y << "\n";
   }
   return 0;
 }
