@@ -6,6 +6,7 @@
 struct point {
   float x;
   float y;
+  int id;   //unique number to identify the point used for the naive algorithm
 };
 
 //function to calculate the distance between two points
@@ -15,9 +16,9 @@ float dist(point const& a, point const& b) {
   return sqrt(x_ * x_ + y_ * y_);
 }
 
-//function to check if two points are identical
+//function to check if two points are the same point
 bool p_eq(point const& a, point const& b) {
-  return ((a.x == b.x) && (a.y == b.y));
+  return (a.id == b.id);
 }
 
 #endif

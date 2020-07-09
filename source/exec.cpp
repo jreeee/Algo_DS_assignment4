@@ -5,7 +5,7 @@
 
 int main(int argc, char* argv[]) {
 
-  int seed, size, rangeh, rangev; 
+  int seed, size, range; 
 
   //setting all the values based on user input
   std::cout << "-Please enter a seed for the number generation\n>";
@@ -13,16 +13,14 @@ int main(int argc, char* argv[]) {
   std::cout << "-Please now specify the number of points\n>";
   std::cin >> size;
   std::cout << "-Lastly please enter the horizontal and vertical range\n>";
-  std::cin >> rangeh;
-  std::cout << ">";
-  std::cin >> rangev;
+  std::cin >> range;
 
   //checking for bad inputs
   if (size <= 2) {
     std::cout << "!Error: size must be greater than two\n";
     return 1;
   }
-  if ((rangeh < 1) || (rangev < 1)) {
+  if (range < 1) {
     std::cout << "!Error: range too small or negative\n";
     return 1;
   }
@@ -30,11 +28,15 @@ int main(int argc, char* argv[]) {
   //generating the set based on the requirements
   std::cout << "\n-Thank you, generating the set\n\n";
   std::vector<point> pts(abs(size));
+  int setid = 0;
   for (auto &i : pts) {
     std::srand(seed);
-    i.x = rand() % (rangeh + 1);
-    i.y = rand() % (rangev + 1);
+    i.x = rand() % (range + 1);
     seed++;
+    i.y = rand() % (range + 1);
+    seed++;
+    i.id = setid;
+    setid++;
   }
 
   //printing out all the points that are in the set
