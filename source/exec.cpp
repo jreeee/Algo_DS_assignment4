@@ -46,9 +46,14 @@ int main(int argc, char* argv[]) {
   }
   std::vector<point> x_ax{pts};
   std::vector<point> y_ax{pts};
-  merge_sort(x_ax, 1, x_ax.size(), true);
-  merge_sort(y_ax, 1, y_ax.size(), false);
+  merge_sort(x_ax, 0, x_ax.size()-1, true);
+  merge_sort(y_ax, 0, y_ax.size()-1, false);
+  std::cout << "\n\n";
   for (auto i : x_ax) {
+    std::cout << "-> " << i.x << " " << i.y << "\n";
+  }
+  std::cout << "\n\n";
+  for (auto i : y_ax) {
     std::cout << "-> " << i.x << " " << i.y << "\n";
   }
   return 0;
