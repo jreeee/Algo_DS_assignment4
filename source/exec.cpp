@@ -1,18 +1,13 @@
-#include "Div_n_Conc.hpp"
-#include "M_sort.hpp"
-#include "point.hpp"
-#include "naive.hpp"
-#include <vector>     //std::vector<>
-#include <set>        //std::set<>
+#include "Div_n_Conc.hpp" //the file includes the algorithms the struct point and std:vector
+
 #include <cstdlib>    //rand()
 #include <iostream>   //std::cin std::cout
-#include <cmath> 
 
 int main(int argc, char* argv[]) {
 
   int seed, size, rangeh, rangev; 
 
-  //setting all the values absed on user input
+  //setting all the values based on user input
   std::cout << "-Please enter a seed for the number generation\n>";
   std::cin >> seed;
   std::cout << "-Please now specify the number of points\n>";
@@ -33,7 +28,7 @@ int main(int argc, char* argv[]) {
   }
 
   //generating the set based on the requirements
-  std::cout << "\n-Thank you\n-Generating the set\n\n";
+  std::cout << "\n-Thank you, generating the set\n\n";
   std::vector<point> pts(abs(size));
   for (auto &i : pts) {
     std::srand(seed);
@@ -41,19 +36,24 @@ int main(int argc, char* argv[]) {
     i.y = rand() % (rangev + 1);
     seed++;
   }
+
+  //printing out all the points that are in the set
   std::cout << "-Generating complete: the following points are in the set:\n\n";
   for (auto i : pts) {
-    std::cout << "->" << i.x << " " << i.y << "\n";
+    std::cout << "-> (" << i.x << "|" << i.y << ")\n";
   }
 
+  //bruteforcing the closest points by using the naive algorithm
   std::cout << "\n\n-using the naive Algorithm:\n\n";
   auto res = naive_alg(pts);
   auto dst = dist(res.first, res.second);
-  std::cout << "=>the closest points are " << res.first.x << " | " << res.first.y << ", " << res.second.x << " | " << res.second.y << " with a distance of " << dst << "\n\n";
+  std::cout << "=>the closest points are (" << res.first.x << "|" << res.first.y << "), (" << res.second.x << "|" << res.second.y << ") with a distance of " << dst << "\n\n";
 
+  //using divide and conquer to get the closest points
   std::cout << "-using divide and conquer:\n\n";
   res = div_n_conc(pts);
   dst = dist(res.first, res.second);
-  std::cout << "=>the closest points are " << res.first.x << " | " << res.first.y << ", " << res.second.x << " | " << res.second.y << " with a distance of " << dst << "\n\n";
+  std::cout << "=>the closest points are (" << res.first.x << "|" << res.first.y << "), (" << res.second.x << "|" << res.second.y << ") with a distance of " << dst << "\n\n";
+
   return 0;
 }

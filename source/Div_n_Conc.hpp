@@ -1,14 +1,13 @@
 #ifndef DNC_HPP
 #define DNC_HPP
 
-#include "M_sort.hpp"
-#include "naive.hpp"
+#include "M_sort.hpp" //used to sort the vector to the x or y axis for find_closest_points
+#include "naive.hpp"  //used if f_c_p needs to compare three points
 #include "point.hpp"
-#include <vector>
+
+#include <vector>   
 #include <cmath>
 
-
-//std::pair<std::vector<point>, std::vector<point>> gen_axis(std::vector<point> const& vec_o) {}
 
 std::pair<point, point> combine(std::vector<point> & y, int l_x, std::pair<point, point> p1_p2, std::pair<point, point> p3_p4) {
   auto d1 = dist(p1_p2.first, p1_p2.second);
