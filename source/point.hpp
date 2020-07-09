@@ -12,4 +12,7 @@ float dist(point const& a, point const& b) {
   int y_ = abs(a.y - b.y);
   return sqrt(x_ * x_ + y_ * y_);
 }
+bool p_eq(point const& a, point const& b) {
+  return ((a.x == b.x) && (a.y == b.y));
+}
 #endif

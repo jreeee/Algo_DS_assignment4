@@ -1,9 +1,12 @@
 #ifndef DNC_HPP
 #define DNC_HPP
 
+#include "M_sort.hpp"
+#include "naive.hpp"
 #include "point.hpp"
 #include <vector>
 #include <cmath>
+
 
 //std::pair<std::vector<point>, std::vector<point>> gen_axis(std::vector<point> const& vec_o) {}
 
@@ -24,7 +27,7 @@ std::pair<point, point> combine(std::vector<point> & y, int l_x, std::pair<point
   }
   for (int i = 0; i < y_copy.size(); ++i) {
     int j = 1;
-    while ((j <= y_copy.size()) && (i + j < y_copy.size())) {
+    while ((j <= y_copy.size()) && ((i + j) < y_copy.size())) {
       auto d3 = dist(y_copy[i], y_copy[i+j]);
       if (d3 < d) {
         p5_p6 = std::pair<point, point>(y_copy[i], y_copy[i+j]);
@@ -37,6 +40,12 @@ std::pair<point, point> combine(std::vector<point> & y, int l_x, std::pair<point
 }
 
 std::pair<point, point> find_closest_points(std::vector<point> & x, std::vector<point> & y) {
+  if (x.size() == 2) {
+    return std::pair<point, point>(x[0], x[1]);
+  }
+  if (x.size() == 3) {
+    return naive_alg(x);
+  }
   int m = floor(x.size()/2);
   int l_x = (x[m].x + x[m+1].x) / 2;
   std::vector<point> x_l (m);
@@ -44,8 +53,8 @@ std::pair<point, point> find_closest_points(std::vector<point> & x, std::vector<
     x_l[i] = x[i];
   }
   std::vector<point> x_r (x.size() - m);
-  for (int i = m; i < x.size(); ++i) {
-    x_l[i] = x[i];
+  for (int i = 0; i < x_r.size(); ++i) {
+    x_r[i] = x[m + i];
   }
   auto p1_p2 = find_closest_points(x_l, y);
   auto p3_p4 = find_closest_points(x_r, y);
@@ -62,6 +71,20 @@ std::pair<point, point> find_closest_points(std::vector<point> & x, std::vector<
   else {
     return p5_p6;
   }
+}
+
+std::pair<point, point> div_n_conc(std::vector<point> & vec) {
+  std::vector<point> x_ax{vec};
+  std::vector<point> y_ax{vec};
+  bool sortx = true;
+  bool sorty = false;
+
+  merge_sort(x_ax, 0, x_ax.size()-1, sortx);
+  partial_sort(x_ax, sortx);
+  merge_sort(y_ax, 0, y_ax.size()-1, sorty);
+  partial_sort(y_ax, sorty);
+
+  return find_closest_points(x_ax, y_ax);
 }
 
 #endif

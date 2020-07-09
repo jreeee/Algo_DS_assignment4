@@ -1,6 +1,7 @@
 #include "Div_n_Conc.hpp"
 #include "M_sort.hpp"
 #include "point.hpp"
+#include "naive.hpp"
 #include <vector>     //std::vector<>
 #include <set>        //std::set<>
 #include <cstdlib>    //rand()
@@ -44,22 +45,15 @@ int main(int argc, char* argv[]) {
   for (auto i : pts) {
     std::cout << "->" << i.x << " " << i.y << "\n";
   }
-  std::vector<point> x_ax{pts};
-  std::vector<point> y_ax{pts};
-  merge_sort(x_ax, 0, x_ax.size()-1, true);
-  partial_sort(x_ax, true);
-  merge_sort(y_ax, 0, y_ax.size()-1, false);
-  partial_sort(y_ax, false);
-  std::cout << "\n\n";
-  for (auto i : x_ax) {
-    std::cout << "-> " << i.x << " " << i.y << "\n";
-  }
-  std::cout << "\n\n";
-  for (auto i : y_ax) {
-    std::cout << "-> " << i.x << " " << i.y << "\n";
-  }
-  auto res = find_closest_points(x_ax, y_ax);
+
+  std::cout << "\n\n-using the naive Algorithm:\n\n";
+  auto res = naive_alg(pts);
   auto dst = dist(res.first, res.second);
-  std::cout << "the closest points are " << res.first.x << " | " << res.first.y << ", " << res.second.x << " | " << res.second.y << " with a distance of " << dst << "\n";
+  std::cout << "=>the closest points are " << res.first.x << " | " << res.first.y << ", " << res.second.x << " | " << res.second.y << " with a distance of " << dst << "\n\n";
+
+  std::cout << "-using divide and conquer:\n\n";
+  res = div_n_conc(pts);
+  dst = dist(res.first, res.second);
+  std::cout << "=>the closest points are " << res.first.x << " | " << res.first.y << ", " << res.second.x << " | " << res.second.y << " with a distance of " << dst << "\n\n";
   return 0;
 }
