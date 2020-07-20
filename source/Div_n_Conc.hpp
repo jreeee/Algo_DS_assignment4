@@ -29,7 +29,7 @@ std::pair<point, point> combine(std::vector<point> & y, int l_x,
 
   for (int i = 0; i < y_copy.size(); ++i) {
     int j = 1;
-    while ((j <= y_copy.size()) && ((i + j) < y_copy.size())) {
+    while ((j <= 7) && ((i + j) < y_copy.size())) {
       auto d3 = dist(y_copy[i], y_copy[i+j]);
       if (d3 < d) {
         p5_p6 = std::pair<point, point>(y_copy[i], y_copy[i+j]);
